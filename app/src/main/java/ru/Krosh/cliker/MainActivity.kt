@@ -1,6 +1,8 @@
 package ru.Krosh.cliker
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -19,10 +21,17 @@ class MainActivity : AppCompatActivity() {
         var bal: Int = 0
         var cost: Int = 500
         var u: Int = 0
+        val myPrefs: SharedPreferences = application.applicationContext.getSharedPreferences("data", MODE_PRIVATE)
+        bal = myPrefs.getString("bal", "")!!.toInt()
         torch.setOnClickListener{
             bal += (1 + u)
 
             balView.text = "Баланс: $bal$"
+            val myPrefs: SharedPreferences = application.applicationContext.getSharedPreferences("data", MODE_PRIVATE)
+            val prefsEditor = myPrefs.edit()
+            prefsEditor.putString("bal", bal.toString())
+            prefsEditor.apply()
+
         }
         shop.setOnClickListener{
             if(bal >= cost){
@@ -30,10 +39,16 @@ class MainActivity : AppCompatActivity() {
                 u++
                 cost *= 2
                 shop.text = "Купить улучшение (+${u+1})\nСтоимость: $cost$"
+                val myPrefs: SharedPreferences = application.applicationContext.getSharedPreferences("data", MODE_PRIVATE)
+                val prefsEditor = myPrefs.edit()
+                prefsEditor.putString("u", u.toString())
+                prefsEditor.putString("u", cost.toString())
+                prefsEditor.apply()
                 Toast.makeText(applicationContext, "Вы купили улучшение.", Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(applicationContext, "Недостаточно средст.", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 }
