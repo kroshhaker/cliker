@@ -23,7 +23,9 @@ class MainActivity : AppCompatActivity() {
         val myPrefs: SharedPreferences = application.applicationContext.getSharedPreferences("data", MODE_PRIVATE)
         bal = myPrefs.getInt("bal", 0)
         u = myPrefs.getInt("u", 0)
-        cost = myPrefs.getInt("cost", 0)
+        cost = myPrefs.getInt("cost", 500)
+        shop.text = "Купить улучшение (+${u+1})\nСтоимость: $cost$"
+        balView.text = "Баланс: $bal$"
         torch.setOnClickListener{
             bal += (1 + u)
 
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 val myPrefs: SharedPreferences = application.applicationContext.getSharedPreferences("data", MODE_PRIVATE)
                 val prefsEditor = myPrefs.edit()
                 prefsEditor.putInt("u", u)
-                prefsEditor.putInt("u", cost)
+                prefsEditor.putInt("cost", cost)
                 prefsEditor.apply()
                 Toast.makeText(applicationContext, "Вы купили улучшение.", Toast.LENGTH_SHORT).show()
             }else{
