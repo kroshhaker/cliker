@@ -1,14 +1,14 @@
+@file:Suppress("NAME_SHADOWING")
+
 package ru.Krosh.cliker
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "SetTextI18n")
@@ -18,9 +18,9 @@ class MainActivity : AppCompatActivity() {
         val torch: Button = findViewById(R.id.buttonTorch)
         val balView: TextView = findViewById(R.id.Score)
         val shop: Button = findViewById(R.id.shop)
-        var bal: Int = 0
-        var cost: Int = 500
-        var u: Int = 0
+        var bal: Int
+        var cost = 500
+        var u = 0
         val myPrefs: SharedPreferences = application.applicationContext.getSharedPreferences("data", MODE_PRIVATE)
         bal = myPrefs.getString("bal", "")!!.toInt()
         torch.setOnClickListener{
