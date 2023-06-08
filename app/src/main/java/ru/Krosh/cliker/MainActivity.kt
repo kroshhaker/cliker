@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,14 +21,16 @@ class MainActivity : AppCompatActivity() {
         var cost = 500
         var u = 0
         val myPrefs: SharedPreferences = application.applicationContext.getSharedPreferences("data", MODE_PRIVATE)
-        bal = myPrefs.getString("bal", "")!!.toInt()
+        bal = myPrefs.getInt("bal", 0)
+        u = myPrefs.getInt("u", 0)
+        cost = myPrefs.getInt("cost", 0)
         torch.setOnClickListener{
             bal += (1 + u)
 
             balView.text = "Баланс: $bal$"
             val myPrefs: SharedPreferences = application.applicationContext.getSharedPreferences("data", MODE_PRIVATE)
             val prefsEditor = myPrefs.edit()
-            prefsEditor.putString("bal", bal.toString())
+            prefsEditor.putInt("bal", bal)
             prefsEditor.apply()
 
         }
@@ -41,8 +42,8 @@ class MainActivity : AppCompatActivity() {
                 shop.text = "Купить улучшение (+${u+1})\nСтоимость: $cost$"
                 val myPrefs: SharedPreferences = application.applicationContext.getSharedPreferences("data", MODE_PRIVATE)
                 val prefsEditor = myPrefs.edit()
-                prefsEditor.putString("u", u.toString())
-                prefsEditor.putString("u", cost.toString())
+                prefsEditor.putInt("u", u)
+                prefsEditor.putInt("u", cost)
                 prefsEditor.apply()
                 Toast.makeText(applicationContext, "Вы купили улучшение.", Toast.LENGTH_SHORT).show()
             }else{
